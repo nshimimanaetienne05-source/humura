@@ -1,0 +1,23 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>How I feel · Humura</title><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/pages.css"></head><body><div id="hdr"></div><main>
+<h1>How do I feel today?</h1>
+<div class="moods">
+<button class="btn" data-m="happy">😊 Happy</button><button class="btn" data-m="sad">😢 Sad</button>
+<button class="btn" data-m="scared">😨 Scared</button><button class="btn" data-m="angry">😠 Angry</button>
+<button class="btn" data-m="tired">😴 Tired</button></div>
+<div id="r" class="box" hidden></div><div id="help" class="box warn" hidden></div>
+<div class="box"><h3>Calm tools</h3><div id="ball"></div>
+<p>Breathe in slowly while the circle grows. Breathe out slowly while it shrinks.</p>
+<h4>Grounding: 5-4-3-2-1</h4>
+<ol><li>Name 5 things you can see.</li><li>Name 4 things you can feel, like your feet on the floor.</li><li>Name 3 sounds you can hear.</li><li>Name 2 things you can smell.</li><li>Name 1 thing you can taste.</li></ol></div>
+</main><script src="js/common.js"></script>
+<script>
+var M={happy:'Good to hear. Keep doing what helps you feel well.',sad:'It is okay to feel sad. You are not alone. Try the calm tools below.',scared:'Feeling scared is hard. You are not alone. Try the calm tools, and ask a trusted person to stay with you.',angry:'Anger is a feeling that can be heard. Breathe first, then tell someone you trust.',tired:'Rest matters. Drink water, rest, and ask for help with heavy work.'};
+document.querySelectorAll('[data-m]').forEach(function(b){b.onclick=function(){
+  var r=document.getElementById('r'),m=b.dataset.m;r.hidden=false;document.getElementById('help').hidden=true;
+  r.innerHTML='<p>'+M[m]+'</p>'+(m=='happy'?'':'<p><b>Do you feel safe right now?</b></p><button class="btn" id="y">Yes</button> <button class="btn exit" id="n">No</button><p id="ty"></p>');
+  if(m!='happy'){
+    document.getElementById('y').onclick=function(){document.getElementById('ty').textContent='Thank you. Be kind to yourself today.'};
+    document.getElementById('n').onclick=function(){showHelp(document.getElementById('help'))};
+  }
+}});
+</script></body></html>

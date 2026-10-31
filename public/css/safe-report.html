@@ -1,0 +1,21 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Safe report · Humura</title><link rel="stylesheet" href="css/style.css"><link rel="stylesheet" href="css/pages.css"></head><body><div id="hdr"></div><main>
+<h1>Safe report</h1>
+<p>You do not need to give your name. <b>In this prototype nothing is sent or saved.</b> You get a private summary you can show to a trusted health worker.</p>
+<div class="q"><b>What happened?</b><select id="w"><option>Physical violence</option><option>Threats</option><option>Sexual violence</option><option>Online abuse</option><option>Neglect</option><option>Something else</option></select></div>
+<div class="q"><b>Are you safe right now?</b><label><input type="radio" name="s" value="y"> Yes</label><label><input type="radio" name="s" value="n"> No</label></div>
+<div class="q"><b>Tell us more (optional)</b><textarea id="t" rows="4"></textarea></div>
+<p><button class="btn" id="go">Get help and information</button></p>
+<div id="out" class="box" hidden></div><div id="help" class="box warn" hidden></div>
+</main><script src="js/common.js"></script><script src="js/safety-rules.js"></script>
+<script>
+document.getElementById('go').onclick=function(){
+  var s=document.querySelector('input[name=s]:checked');if(!s){alert('Please tell us if you are safe right now.');return}
+  var w=document.getElementById('w').value,r=scan(document.getElementById('t').value),o=document.getElementById('out');
+  var danger=s.value=='n'||r.some(function(k){return k=='threat'||k=='selfharm'||k=='blackmail'});
+  var sum='Summary (no name)\nDate: '+new Date().toISOString().slice(0,10)+'\nWhat happened: '+w+'\nSafe now: '+(s.value=='y'?'yes':'NO');
+  o.hidden=false;
+  o.innerHTML='<p><b>What happened is not your fault.</b> You can get care and support.</p><ul><li>Go to the nearest health facility. Ask for the Isange One Stop Center if there is one (a real person must confirm the nearest one for your area).</li><li>Tell a trusted adult.</li><li>Keep any proof, such as messages or photos.</li></ul><pre>'+sum+'</pre><button class="btn" id="cp">Copy summary</button>';
+  document.getElementById('cp').onclick=function(){navigator.clipboard.writeText(sum)};
+  if(danger)showHelp(document.getElementById('help'));else document.getElementById('help').hidden=true;
+};
+</script></body></html>
